@@ -156,7 +156,7 @@ Your feedback should be very detailed and include:
 * Second, tell us what the outputs contain / represent and the relation to the given code. Explain images and figures in very detail.
 * Third, tell us where code and outputs don't align well, or where the code is misleading. Also point out if the code is not doing what is written in its comments, and explain what is different, missing, or misleading.
 * Point out potential pitfalls and code improvements. Mention typos if you see them. If variable names are not descriptive or misleading, suggest better names. If equations are wrong, point this out.
-* In the last bullet point say ALL GOOD if there is nothing that could be improved. Write ACTION REQUIRED if there is anything that needs to be done and explain what needs to be done. Write this explanation in a single line behind ACTION REQUIRED
+* In the last bullet point say ALL GOOD if there is nothing that could be improved. Write FEATURE REQUEST if you have an idea for improvement and explain this idea. Write WARNING for non-fatal issues and potential problems and explain this potential problem. Write ACTION REQUIRED for critical issues that must be fixed. Write this explanation in a single line behind ACTION REQUIRED.
 
 There are some variables, functions and modules that are available to be used. NEVER complain that these need to be defined, because they are already defined.
 {reusable_variables_block}

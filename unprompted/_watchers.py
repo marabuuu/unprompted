@@ -157,6 +157,10 @@ class VarWatcher(object):
                 
                 if "ACTION REQUIRED" in response:
                     headline = "🤓 unprompted feedback: " + response.split("ACTION REQUIRED")[1].strip(":").strip()
+                elif "FEATURE REQUEST" in response:
+                    headline = "💡 unprompted feature request: " + response.split("FEATURE REQUEST")[1].strip(":").strip()
+                elif "WARNING" in response:
+                    headline = "⚠️ unprompted warning: " + response.split("WARNING")[1].strip(":").strip()
                 else:
                     headline = "👍"
                 break
