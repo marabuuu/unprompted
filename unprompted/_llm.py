@@ -91,14 +91,6 @@ def prompt(list_of_objects: List[Any], code: str, temperature=0.0) -> str:
     if len(api_key) == 0:
         api_key = None
 
-    client = OpenAI(
-        base_url=llm_url,
-        api_key=api_key
-    )
-
-    # use the model stored in the environment variable UNPROMPTED_MODEL
-    model = os.getenv("UNPROMPTED_MODEL", DEFAULT_MODEL)
-
     # Prepare text content and image messages
     text_parts = []
     image_messages = []
@@ -109,33 +101,6 @@ def prompt(list_of_objects: List[Any], code: str, temperature=0.0) -> str:
             text_parts.append(f"[img{len(image_messages) + 1}]")
         else:
             text_parts.append(str(obj))
-
-    image_example = []
-    if len(image_messages) > 0:
-        ex_fig, ex_code = make_demo_fig_and_code()
-
-        image_example = [{
-            "role": "user",
-            "content": [
-                {"type": "text", "text": f"""Code:
-```python
-{ex_code}
-```
-
-Outputs:
-[img1]
-"""}, 
-                {"type": "image_url", "image_url": {"url": ex_fig}}
-            ]
-        }, {
-            "role": "assistant",
-            "content": """* The code draws a green circle and two red circles.
-* In the output image I see a green circle with two red circles inside as instructed in the code.
-* Code and output fit well together.
-* The code looks great. I cannot suggest improvements.
-* ALL GOOD
-"""}]
-            
 
     # Combine text parts into one message
     outputs = "\n".join(text_parts)
@@ -162,132 +127,18 @@ There are some variables, functions and modules that are available to be used. N
 {reusable_variables_block}
 
 Keep your response as short and concise as demonstrated in the given examples.
-"""}, {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": """Code:
-```python
-# Print numbers from 1 to 3
-for i in range(3):
-    print(i)
-```                                                                                              
-
-Outputs:
-0
-1
-2
-"""}]
-        },
-        {
-            "role": "assistant",
-            "content": """* The code prints the numbers from 0 to 2.
-* The output consists of the numbers 0, 1, and 2, as instructed in the code.
-* The variable `i` is defined.
-* The comment in the code does neither fit to the code nor to the output.
-* ACTION REQUIRED: To make the code do what's in the comment, the code should be changed to the range to range(1, 4).
-"""
-        },
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": """Code:
-```python
-my_list = ["banana", "apple", "cherry", "date"]
-
-# Sort alphabetically
-sorted_list = sorted(my_list)
-print(sorted_list)
-```
-
-Outputs:
-["apple", "banana", "cherry", "date"]
-"""}]},
-        {
-            "role": "assistant",
-            "content": """* The code creates a list of fruits as strings, sorts them alphabetically and prints the sorted list out.
-* The output is an alphabetically sorted list of fruits as instructed in the code.
-* Code and output fit well together.
-* The variables `my_list` and `sorted_list` are defined.
-* The code looks great. I cannot suggest improvements.
-* ALL GOOD
 """},
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": """Code:
-```python
-area = speed / distance
-print(area)
-```
-
-Outputs:
-5
-"""}]},
-        {
-            "role": "assistant",
-            "content": """* The code computes area from speed and distance and prints out the result. The equation is wrong.
-* The output is a single number: 5, presumably the result of the wrong equation.
-* While code and output fit together, the equation in the code is misleading. Speed divided by distance is time and not area.
-* The variables `distance` and `speed` are not defined.
-* ACTION REQUIRED: The variable `area` should be renamed to `time`. Make sure to define the variables `distance` and `speed`.
-"""},
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": """Code:
-```python
-# load a text file from disk
-with open("test.txt", "r") as f:
-    text = f.read()
-print(text)
-```
-
-Outputs:
-Hello, world!
-"""}]},
-        {
-            "role": "assistant",
-            "content": """* The code loads a text file from disk and prints out the content.
-* The output is the content of the text file as instructed in the code.
-* Code and output fit well together.
-* The variables `text` and `f` are defined.
-* The code looks great. I cannot suggest improvements.
-* ALL GOOD
-"""},
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": """Code:
-```python
-import datetime
-hour = datetime.datetime.now().hour
-if hour > 12:
-    print(hullahupp)
-else:
-    print("Good morning!")
-```
-
-Outputs:
-Good morning!
-"""}]},
-        {
-            "role": "assistant",
-            "content": """* The code prints out the content of the variable `hullahupp` if it's in the afternoon and "".
-* The output is "Good morning!" as instructed in the code.
-* Code and output fit well together.
-* The variable `hour` is defined. The variable `hullahupp` is not defined.
-* ACTION REQUIRED: Define the variable `hullahupp`.
-"""},
-]
+        # Examples have been moved to examples.yml
+    ]
     
-    messages = messages + image_example + [
+    messages += [
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": f"""Code:
-```python
-{code}
-```
+                {"type": "text", "text": f"Code:\n```python\n{code}\n```"}
+            ] + image_messages
+        }
+    ]
 
 Outputs: 
 {outputs}

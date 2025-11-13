@@ -1,0 +1,99 @@
+categories:
+  - name: ALL GOOD
+    emoji: 👍
+    description: No improvements needed.
+    example: |
+      * The code looks great. I cannot suggest improvements.
+      * ALL GOOD
+
+  - name: FEATURE REQUEST
+    emoji: 💡
+    description: Suggestion for improvement.
+    example: |
+      * FEATURE REQUEST: Consider using a more descriptive variable name for clarity.
+
+  - name: WARNING
+    emoji: ⚠️
+    description: Non-fatal issue or potential problem.
+    example: |
+      * WARNING: The variable 'x' is used before assignment.
+
+  - name: ACTION REQUIRED
+    emoji: 🚨
+    description: Critical issue that must be fixed.
+    example: |
+      * ACTION REQUIRED: Define the variable 'hullahupp'.
+
+examples:
+  - code: |
+      # Print numbers from 1 to 3
+      for i in range(3):
+          print(i)
+    output: |
+      0
+      1
+      2
+    feedback: |
+      * The code prints the numbers from 0 to 2.
+      * The output consists of the numbers 0, 1, and 2, as instructed in the code.
+      * The variable `i` is defined.
+      * The comment in the code does neither fit to the code nor to the output.
+      * ACTION REQUIRED: To make the code do what's in the comment, the code should be changed to the range to range(1, 4).
+
+  - code: |
+      my_list = ["banana", "apple", "cherry", "date"]
+      # Sort alphabetically
+      sorted_list = sorted(my_list)
+      print(sorted_list)
+    output: |
+      ["apple", "banana", "cherry", "date"]
+    feedback: |
+      * The code creates a list of fruits as strings, sorts them alphabetically and prints the sorted list out.
+      * The output is an alphabetically sorted list of fruits as instructed in the code.
+      * Code and output fit well together.
+      * The variables `my_list` and `sorted_list` are defined.
+      * The code looks great. I cannot suggest improvements.
+      * ALL GOOD
+
+  - code: |
+      area = speed / distance
+      print(area)
+    output: |
+      5
+    feedback: |
+      * The code computes area from speed and distance and prints out the result. The equation is wrong.
+      * The output is a single number: 5, presumably the result of the wrong equation.
+      * While code and output fit together, the equation in the code is misleading. Speed divided by distance is time and not area.
+      * The variables `distance` and `speed` are not defined.
+      * ACTION REQUIRED: The variable `area` should be renamed to `time`. Make sure to define the variables `distance` and `speed`.
+
+  - code: |
+      # load a text file from disk
+      with open("test.txt", "r") as f:
+          text = f.read()
+      print(text)
+    output: |
+      Hello, world!
+    feedback: |
+      * The code loads a text file from disk and prints out the content.
+      * The output is the content of the text file as instructed in the code.
+      * Code and output fit well together.
+      * The variables `text` and `f` are defined.
+      * The code looks great. I cannot suggest improvements.
+      * ALL GOOD
+
+  - code: |
+      import datetime
+      hour = datetime.datetime.now().hour
+      if hour > 12:
+          print(hullahupp)
+      else:
+          print("Good morning!")
+    output: |
+      Good morning!
+    feedback: |
+      * The code prints out the content of the variable `hullahupp` if it's in the afternoon and "".
+      * The output is "Good morning!" as instructed in the code.
+      * Code and output fit well together.
+      * The variable `hour` is defined. The variable `hullahupp` is not defined.
+      * ACTION REQUIRED: Define the variable `hullahupp`.
